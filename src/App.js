@@ -194,6 +194,22 @@ function App() {
           </form>
         </div>
       </div>
+
+      {/* Футер */}
+      <footer className="main-footer">
+        <div className="footer-content">
+          <div className="footer-links">
+            <a href="#" className="footer-link">О платформе</a>
+            <a href="#" className="footer-link">Контакты</a>
+            <a href="#" className="footer-link">Пользовательское соглашение</a>
+            <a href="#" className="footer-link">Политика конфиденциальности</a>
+            <a href="#" className="footer-link">Поддержка</a>
+          </div>
+          <div className="footer-copyright">
+            <p>&copy; 2025 BrandConnect. Все права защищены.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
