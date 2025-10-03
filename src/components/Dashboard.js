@@ -28,7 +28,7 @@ function Dashboard() {
           <h2>Профиль</h2>
           <div className="user-details">
             <div className="user-avatar">
-              <span>{user.avatar}</span>
+              {user.avatar ? (<img src={user.avatar} alt="Аватар" className="avatar-image" />) : (<span>{user.avatar}</span>)}
             </div>
             <div className="user-data">
               <p><strong>Имя:</strong> {user.name}</p>

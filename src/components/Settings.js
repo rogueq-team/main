@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import './Settings.css';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import AvatarUpload from './AvatarUpload';
+import './Settings.css';
 
 function Settings() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('profile');
-  const [formData, setFormData] = useState({
+  const [hasChanges, setHasChanges] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  
+useEffect(() => {
+    window.scrollTo(0, 0);
+    }, []);
+useEffect(() => {
+    window.scrollTo(0, 0);
+    }, [activeTab]);п
+  // Исходные данные пользователя
+  const initialData = {
     name: user?.name || '',
     email: user?.email || '',
     phone: '',
     company: user?.userType === 'advertiser' ? user?.name : '',
     website: '',
     description: '',
+    avatar: user?.avatar || '', // Добавляем аватар
     socialLinks: {
       youtube: '',
       instagram: '',
@@ -20,7 +33,19 @@ function Settings() {
       tiktok: '',
       vk: ''
     }
-  });
+  };
+
+  const [formData, setFormData] = useState(initialData);
+  const [initialFormData, setInitialFormData] = useState(initialData);
+
+  // Сравниваем текущие данные с исходными
+  useEffect(() => {
+    const hasFormChanged = JSON.stringify(formData) !== JSON.stringify(initialFormData);
+    setHasChanges(hasFormChanged);
+    if (hasFormChanged) {
+      setIsSaved(false);
+    }
+  }, [formData, initialFormData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,17 +67,67 @@ function Settings() {
     }
   };
 
+  // Функция для изменения аватара
+  const handleAvatarChange = (newAvatar) => {
+    setFormData(prev => ({
+      ...prev,
+      avatar: newAvatar
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Сохранение настроек:', formData);
+    
+    // Имитация сохранения
+    setInitialFormData(formData);
+    setHasChanges(false);
+    setIsSaved(true);
+    
+    // Убираем сообщение об успехе через 3 секунды
+    setTimeout(() => setIsSaved(false), 3000);
+    
     alert('Настройки сохранены!');
+  };
+
+  const handleCancel = () => {
+    // Возвращаем исходные данные
+    setFormData(initialFormData);
+    setHasChanges(false);
+    setIsSaved(false);
+  };
+
+  const handleBackToDashboard = () => {
+    if (hasChanges) {
+      const confirmLeave = window.confirm('У вас есть несохраненные изменения. Вы уверены, что хотите выйти?');
+      if (confirmLeave) {
+        navigate('/dashboard');
+      }
+    } else {
+      navigate('/dashboard');
+    }
   };
 
   return (
     <div className="settings-page">
       <div className="settings-container">
-        <h1>Настройки профиля</h1>
+        <div className="settings-header">
+          <button 
+            onClick={handleBackToDashboard}
+            className="back-btn"
+            title="Вернуться в личный кабинет"
+          >
+            ← Назад
+          </button>
+          <h1>Настройки профиля</h1>
+        </div>
         
+        {isSaved && (
+          <div className="success-message">
+            ✅ Настройки успешно сохранены!
+          </div>
+        )}
+
         <div className="settings-tabs">
           <button 
             className={`tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
@@ -82,6 +157,15 @@ function Settings() {
             <div className="tab-content">
               <h2>Основная информация</h2>
               
+              {/* Блок аватара */}
+              <div className="avatar-section">
+                <h3>Аватар профиля</h3>
+                <AvatarUpload 
+                  currentAvatar={formData.avatar}
+                  onAvatarChange={handleAvatarChange}
+                />
+              </div>
+
               <div className="form-group">
                 <label htmlFor="name">
                   {user?.userType === 'advertiser' ? 'Название компании' : 'Имя и фамилия'}
@@ -281,12 +365,32 @@ function Settings() {
           )}
 
           <div className="form-actions">
-            <button type="submit" className="primary-btn">
-              Сохранить изменения
+            <button 
+              type="submit" 
+              className={`save-btn ${hasChanges ? 'active' : 'inactive'}`}
+              disabled={!hasChanges}
+            >
+              {hasChanges ? '💾 Сохранить изменения' : '✅ Сохранено'}
             </button>
-            <button type="button" className="secondary-btn" onClick={() => window.history.back()}>
-              Отмена
-            </button>
+            
+            <div className="right-actions">
+              {hasChanges && (
+                <button 
+                  type="button" 
+                  className="cancel-btn"
+                  onClick={handleCancel}
+                >
+                  🔄 Сбросить
+                </button>
+              )}
+              <button 
+                type="button" 
+                className="back-dashboard-btn"
+                onClick={handleBackToDashboard}
+              >
+                ← В кабинет
+              </button>
+            </div>
           </div>
         </form>
       </div>
