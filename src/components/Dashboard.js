@@ -20,7 +20,7 @@ function Dashboard() {
     <div className="dashboard">
       <div className="dashboard-header">
         <h1>Личный кабинет {user.userType === 'advertiser' ? 'рекламодателя' : 'контентмейкера'}</h1>
-    </div>
+      </div>
 
       <div className="dashboard-content">
         {/* Блок информации о пользователе */}
@@ -61,6 +61,31 @@ function Dashboard() {
             <h3>Статистика</h3>
             <p className="stat-value">{user.statistics.views.toLocaleString()}</p>
             <span>просмотров</span>
+          </div>
+        </div>
+
+        {/* Блок быстрых действий - ДОБАВЛЯЕМ ЕГО */}
+        <div className="quick-actions">
+          <h2>Быстрые действия</h2>
+          <div className="action-buttons">
+            <button className="action-btn" onClick={() => navigate('/settings')}>
+              ⚙️ Настройки
+            </button>
+            <button className="action-btn">
+              📊 Аналитика
+            </button>
+            <button className="action-btn">
+              💬 Поддержка
+            </button>
+            {user.userType === 'advertiser' ? (
+              <button className="action-btn">
+                🎯 Создать кампанию
+              </button>
+            ) : (
+              <button className="action-btn">
+                📹 Мои площадки
+              </button>
+            )}
           </div>
         </div>
 

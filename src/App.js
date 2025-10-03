@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import Register from './components/Register';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import Settings from './components/Settings';
 import './App.css';
 
 // Компонент для защищенных маршрутов
@@ -23,16 +24,9 @@ function AppContent() {
           <Route path="/" element={<Register />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          {/* Редирект на dashboard если пользователь авторизован */}
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />{/* Редирект на dashboard если пользователь авторизован */}
           <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
         </Routes>
       </main>
       <Footer />
