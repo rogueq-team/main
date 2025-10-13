@@ -32,7 +32,7 @@ public static class UserService
     public static void Add(User user)
     {
         user.Id = id++;
-        user.PasswordHash = PasswordService.HashPassword(user.PasswordHash);
+        user.Password = PasswordService.HashPassword(user.Password);
         Users.Add(user);
     }
 
@@ -49,7 +49,7 @@ public static class UserService
         User? replaceUser = FindById(user.Id);
         if (!(replaceUser is null))
         {
-            user.PasswordHash = PasswordService.HashPassword(user.PasswordHash);
+            user.Password = PasswordService.HashPassword(user.Password);
             int index = Users.IndexOf(replaceUser);
             Users[index] = user;
         }

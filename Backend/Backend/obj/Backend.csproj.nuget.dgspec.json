@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\project\\main\\Backend\\Backend\\Backend.csproj": {}
+    "E:\\project\\backend\\main\\Backend\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "E:\\project\\main\\Backend\\Backend\\Backend.csproj": {
+    "E:\\project\\backend\\main\\Backend\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\project\\main\\Backend\\Backend\\Backend.csproj",
+        "projectUniqueName": "E:\\project\\backend\\main\\Backend\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "E:\\project\\main\\Backend\\Backend\\Backend.csproj",
+        "projectPath": "E:\\project\\backend\\main\\Backend\\Backend\\Backend.csproj",
         "packagesPath": "C:\\Users\\компьютер\\.nuget\\packages\\",
-        "outputPath": "E:\\project\\main\\Backend\\Backend\\obj\\",
+        "outputPath": "E:\\project\\backend\\main\\Backend\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\компьютер\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -46,6 +46,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"

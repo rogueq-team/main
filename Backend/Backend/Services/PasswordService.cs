@@ -29,7 +29,6 @@ using Microsoft.AspNetCore.Mvc;
             Array.Copy(hsh, 0, salt, 0, salt.Length);
             byte[] originalHsh = new byte[hsh.Length - salt.Length];
             Array.Copy(hsh, salt.Length, originalHsh, 0, originalHsh.Length);
-
             byte[] newHsh = KeyDerivation.Pbkdf2(
             password: Password!,
             prf: KeyDerivationPrf.HMACSHA256,

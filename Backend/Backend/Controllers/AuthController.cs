@@ -19,8 +19,8 @@ public class AuthController : ControllerBase
     {
         return Ok(UserService.GetAll());
     }
-    [HttpPost("register")]
-    public IActionResult Register(User user)
+    [HttpPost("registration")]
+    public IActionResult Registration(User user)
     {
         if (!ModelState.IsValid)
             return BadRequest();
@@ -30,7 +30,14 @@ public class AuthController : ControllerBase
             return Conflict(new { message = "Пользователь с таким логином уже существует" });
         UserService.Add(user);
         return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
-     }
+    }
+
+    [HttpPost("Authentication")]
+    public IActionResult Authentication(User user)
+    {
         
+    }
+
 }
+
 

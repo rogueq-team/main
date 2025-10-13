@@ -8,8 +8,8 @@ namespace Backend.Models
         private int id=0;
         private string login=string.Empty;
         private string email=string.Empty;
-        private string status = "Guest";
-        private string passwordHash=string.Empty;
+        private string role = "platform";
+        private string password=string.Empty;
 
 
         [JsonIgnore]
@@ -18,14 +18,13 @@ namespace Backend.Models
         [Required(ErrorMessage = "Логин обязателен")]
         public string Login { get { return login; } set { login = value; } }
 
-        [Required]  
+        [Required]
         [EmailAddress(ErrorMessage = "Неверный формат email")]
         public string Email { get { return email; ; } set { email = value; } }
-
-        [JsonIgnore]
-        public string Status { get { return status; } set { status = value; } }
+        
+        [Required]
+        public string Role { get { return role; } set { role = value; } }
         [Required(ErrorMessage ="Пароль обязателен")]
-
-        public string PasswordHash { get { return passwordHash; } set { passwordHash = value; } }
+        public string Password { get{ return password; } set { password = value; } }
     }
 }
